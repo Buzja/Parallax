@@ -1,14 +1,14 @@
-const parallaxObj = document.getElementById("parallax");
-const parallaxSpeed = parallaxObj.dataset.parallaxspeed;
-let startPos = parallaxObj.offsetTop;
+const parallaxObjects = document.querySelectorAll(".parallax");
+const parallaxSpeed = 2;
 
-window.addEventListener("scroll", () => {
-    if (window.scrollY >= startPos) {
-        parallaxObj.style.backgroundPositionY = (window.scrollY - startPos) / parallaxSpeed + "px";
-    }
-})
+function parralax() {
+    parallaxObjects.forEach(obj => {
+        const startPos = obj.offsetTop;
+        const objHeight = startPos + obj.clientHeight;
 
-window.onresize = () => {
-    startPos = parallaxObj.offsetTop;
-    parallaxObj.style.backgroundPositionY = 0 + "px";
+        if (window.scrollY + window.innerHeight >= startPos && window.scrollY <= objHeight)
+            obj.style.backgroundPositionY = (window.scrollY - startPos) / parallaxSpeed + "px";
+    });
 }
+window.addEventListener("scroll", parralax);
+window.addEventListener("resize", parralax);
